@@ -19,6 +19,7 @@ maximum_value = 100
 fixed_length = int(random.uniform(2, max_length))
 vector_a = generate_random_int_list(fixed_length, maximum_value)
 vector_b = generate_random_int_list(fixed_length, maximum_value)
+print(vector_a)
 
 """
 Step 2: Iterate through the vector(s) and calculate the dot product
@@ -26,6 +27,9 @@ Step 2: Iterate through the vector(s) and calculate the dot product
 
 # store your result here. Do not change the name
 dot_product = 0
+
+for a, b in zip(vector_a, vector_b):
+    dot_product += (a * b)
 
 ### Your code here
 

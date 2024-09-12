@@ -1,5 +1,6 @@
 import random
 
+
 """
 THIS SECTION IS DR. FORSYTH'S CODE. DO NOT MODIFY. BUT KEEP READING.
 """
@@ -16,13 +17,14 @@ even_list = random.sample(range(100), an_odd_number)
 # print out the list contents
 print("Your list is: ", even_list)
 
-"""
-YOUR CODE BEGINS BELOW HERE. FILL IN THE MISSING OPERATIONS / CODE
-"""
+middle_index_2 = int(len(even_list)/2)
+middle_index_1 = middle_index_2 - 1
 
+print(middle_index_2)
+print(middle_index_1)
 
 # this is the final result. Modify this line, and the empty lines above, to solve the assignment
-middle_average = None
+middle_average = (even_list[middle_index_1] + even_list[middle_index_2])/2
 
 # the average of middle elements is
 print("The average is: ", middle_average)

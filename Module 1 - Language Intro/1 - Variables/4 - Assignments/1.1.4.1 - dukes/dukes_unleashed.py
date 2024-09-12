@@ -8,8 +8,20 @@ Note: this problem does not require the "compounding interest" formula from the 
 
 """
 
-### Your code here ###
-
 in_state_gift = 0
 
 out_state_gift = 0
+
+in_state_tuition = 30792
+
+out_state_tuition = 47882
+
+in_state_gift = in_state_tuition / 0.05
+
+out_state_gift = out_state_tuition / 0.05
+
+print(f'\nIn state gift amount: ${in_state_gift}\n')
+
+print(f'Out of state gift amount: ${out_state_gift}')
+
+

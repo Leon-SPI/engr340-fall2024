@@ -11,11 +11,14 @@ would his investment be worth in 10-year and 20-year bonds? Assume the 10-year b
 the 20-year bonds pay 4.32%, with each compounding annually.
 """
 
-### all your code below ###
+def compound(n, p, r):
+    A = p * ((1 + (r / 100))**n)
+    return A
 
+ten_year_final = compound(10, 33000000000, 3.96)
 
-# final answer for 10-year
-ten_year_final = None
+twenty_year_final = compound(20, 33000000000, 4.32)
 
-# final answer for 20-year
-twenty_year_final = None
+print(f'Final amount after 10 years: ${ten_year_final:.2f}')
+
+print(f'Final amount after 20 years: ${twenty_year_final:.2f}')

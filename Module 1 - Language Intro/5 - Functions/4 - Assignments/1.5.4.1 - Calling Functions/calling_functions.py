@@ -1,4 +1,3 @@
-from numpy import random
 import numpy as np
 
 # Parameters for distribution and samples to generate
@@ -10,7 +9,7 @@ std = 1.2
 num_samples = 10
 
 # Step 2: use normal to generate distribution samples
-samples = None #edit this line
+samples = np.random.normal(mu, std, num_samples)
 
 # Step 3: use mean() to determine the average of those samples
 measured_mean = -1 #edit this line
