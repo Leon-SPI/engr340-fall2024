@@ -1,3 +1,4 @@
+import math
 import random
 import numpy as np
 
@@ -17,12 +18,15 @@ def dot_product(a,b):
     :param b: List B of values
     :return: The dot product as a value between a * b
     """
+    dotProduct = 0
+    for a, b in zip(vector_a, vector_b):
+        dotProduct += (a * b)
 
-    ### YOUR CODE HERE ###
+    return dotProduct
+
 
 
     ### CHANGE THIS RETURN VALUE. IT IS HERE SO THE CODE DOES NOT ERROR
-    return None
 
 """
 Step 1: Generate two "vectors" of equal length but full of random values
