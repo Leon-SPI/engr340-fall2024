@@ -1,6 +1,6 @@
 import numpy as np
 from os import path
-import scipy.constants as constants
+import scipy.constants as c
 
 
 def calculate_average(data):
