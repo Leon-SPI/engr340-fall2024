@@ -60,10 +60,9 @@ def calculate_stress(force, sample_diameter):
     :return: An array of stresses experienced by the sample in Kilo Pascals (MPa)
     """
 
-    ### YOUR SOLUTION FROM STEP 1 TEMPLATE HERE ###
-
-    return None
-
+    csa = np.pi * np.pow((sample_diameter / 2), 2)
+    stress = ((force) / csa) * 1000
+    return stress
 
 def calculate_max_strength_strain(strain, stress):
     """
@@ -75,9 +74,9 @@ def calculate_max_strength_strain(strain, stress):
     Fracture Strain: the maximum strain experienced before fracture
     """
 
-    ### YOUR SOLUTION FROM STEP 2 TEMPLATE HERE ###
-
-    return -1, -1
+    ultimate_tensile_stress = np.max(stress)
+    fracture_strain = np.max(strain)
+    return ultimate_tensile_stress, fracture_strain
 
 def calculate_elastic_modulus(strain, stress):
     """
