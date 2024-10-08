@@ -60,9 +60,9 @@ def calculate_stress(force, sample_diameter):
     :return: An array of stresses experienced by the sample in Kilo Pascals (MPa)
     """
 
-    ### YOUR SOLUTION FROM STEP 1 TEMPLATE HERE ###
-
-    return None
+    csa = np.pi * np.pow((sample_diameter / 2), 2)
+    stress = ((force) / csa) * 1000
+    return stress
 
 
 def calculate_max_strength_strain(strain, stress):
@@ -75,9 +75,9 @@ def calculate_max_strength_strain(strain, stress):
     Fracture Strain: the maximum strain experienced before fracture
     """
 
-    ### YOUR SOLUTION FROM STEP 2 TEMPLATE HERE ###
-
-    return -1, -1
+    ultimate_tensile_stress = np.max(stress)
+    fracture_strain = np.max(strain)
+    return ultimate_tensile_stress, fracture_strain
 
 def calculate_elastic_modulus(strain, stress):
     """
@@ -91,14 +91,14 @@ def calculate_elastic_modulus(strain, stress):
         intercept: y-intercept for linear region best fit of strain/stress data
     """
 
-    # dummy variables the function should over write
-    linear_index = None
-    slope = None
-    intercept = None
-
-    ### YOUR SOLUTION FROM STEP 3 TEMPLATE HERE ###
-
+    secant_strain = max(stress) * 0.4
+    diffs = np.abs(stress-secant_strain)
+    linear_index = np.argmin(diffs)
+    linear_stress = stress[0:linear_index]
+    linear_strain = strain[0:linear_index]
+    slope, intercept = np.polyfit(linear_strain, linear_stress, 1)
     return linear_index, slope, intercept
+
 
 def calculate_percent_offset(slope, strain, stress):
     """
@@ -115,14 +115,14 @@ def calculate_percent_offset(slope, strain, stress):
     offset = 0.002
 
     # calculate the offset line: y=m(x-0.002) + 0
-    offset_line = None
+    offset_line = slope * (strain - offset)
 
     # measure distance from all points on graph to this line. Consider using the
     # abs() method to ensure values are positive
-    distance = None
+    distance = np.abs(stress - offset_line)
 
     # use argmin to find the index where the distance is minimal
-    intercept_index = -1
+    intercept_index = np.argmin(distance)
 
     return offset_line, intercept_index
 
