@@ -1,5 +1,8 @@
 import numpy as np
 from ekg_testbench import EKGTestBench
+from scipy import signal as sg
+#import matplotlib.pyplot as plt
+
 
 def detect_heartbeats(filepath):
     """
@@ -15,39 +18,57 @@ def detect_heartbeats(filepath):
     path = filepath
 
     # load data in matrix from CSV file; skip first two rows
-    ## your code here
+    data = np.loadtxt(path, delimiter=',', skiprows=2)
 
     # save each vector as own variable
-    ## your code here
+    time = data[:, 0]
+    lead_signal = data[:, 1]
+    v1 = data[:, 2]
+    filter_order = 4
+    cutoff_frequency = 60
+    sample_frequency = 1 / np.mean(np.diff(time))
+    print(sample_frequency)
 
     # identify one column to process. Call that column signal
 
-    signal = -1 ## your code here
-
     # pass data through LOW PASS FILTER (OPTIONAL)
-    ## your code here
+    nyquist_rate = sample_frequency / 2
+    normal_cutoff = cutoff_frequency / nyquist_rate
+    #butter_lead_signal = sg.butter(filter_order, normal_cutoff, 'low', output='sos')
+    butter_lead_signal = sg.butter(filter_order, [30, 100], fs=sample_frequency, btype='band', output='sos')
+    butter_signal = sg.sosfilt(butter_lead_signal, lead_signal)
 
     # pass data through HIGH PASS FILTER (OPTIONAL) to create BAND PASS result
     ## your code here
 
     # pass data through differentiator
-    ## your code here
+    diff_signal = np.diff(butter_signal, n=1)
 
     # pass data through square function
-    ## your code here
+    sqr_signal = np.square(diff_signal)
+    print(sqr_signal)
 
     # pass through moving average window
-    ## your code here
+    window_size = 50
+    avg_signal = np.convolve(sqr_signal, np.ones(window_size) / window_size, mode='same')
 
     # use find_peaks to identify peaks within averaged/filtered data
     # save the peaks result and return as part of testbench result
 
-    ## your code here peaks,_ = find_peaks(....)
+    def peaks_height(signal):
+        max_height = 0
+        for val in signal:
+            if val > max_height:
+                max_height = val
+        return max_height * 0.065
+    print(peaks_height(avg_signal))
 
-    beats = None
+    peaks, _ = sg.find_peaks(avg_signal, height=peaks_height(avg_signal), distance=100)
+
+    beats = peaks
 
     # do not modify this line
-    return signal, beats
+    return avg_signal, beats
 
 
 # when running this file directly, this will execute first
@@ -60,13 +81,13 @@ if __name__ == "__main__":
     database_name = 'mitdb_201'
 
     # set to true if you wish to generate a debug file
-    file_debug = False
+    file_debug = True
 
     # set to true if you wish to print overall stats to the screen
     print_debug = True
 
     # set to true if you wish to show a plot of each detection process
-    show_plot = False
+    show_plot = True
 
     ### DO NOT MODIFY BELOW THIS LINE!!! ###
 
@@ -141,3 +162,4 @@ if __name__ == "__main__":
         print("-------------------------------------------------")
 
     print("Done!")
+
